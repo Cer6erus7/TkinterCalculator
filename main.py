@@ -12,6 +12,7 @@ win.iconphoto(False, logo)
 #153023  green color
 #33ffe6  blue color
 
+
 def calculating():
     value = str(enter.get())
     enter.delete(0, tk.END)
@@ -23,25 +24,53 @@ def calculating():
         enter.insert(tk.END, "Syntax error, try again!")
 
 
+def post_number(number):
+    if enter.get()[0] == "0" and len(enter.get()) == 1:
+        enter.delete(0)
+    enter.insert(tk.END, number)
+
+
+def make_number(symbol):
+    return tk.Button(win, text=symbol, command=lambda: post_number(symbol), bd=4)
+
+
+def post_operator(operator):
+    if enter.get()[-1] in '*-/+':
+        enter.delete(len(enter.get()) - 1)
+    enter.insert(tk.END, operator)
+
+
+def make_operator(symbol):
+    return tk.Button(win, text=symbol, command=lambda: post_operator(symbol), bd=4)
+
+
+def remover():
+    enter.delete(0, tk.END)
+    enter.insert(tk.END, "0")
+
+
 enter = tk.Entry(win, borderwidth=4, relief=tk.RAISED, justify=tk.RIGHT, font=("Arial", 15))
 enter.grid(row=0, columnspan=4, stick='wens', pady=5, padx=5)
+enter.insert(tk.END, "0")
 
-tk.Button(win, text="1", command=lambda: enter.insert(tk.END, '1'), bd=4).grid(row=1, column=0, stick='wens', pady=5, padx=5)
-tk.Button(win, text="2", command=lambda: enter.insert(tk.END, "2"), bd=4).grid(row=1, column=1, stick='wens', pady=5, padx=5)
-tk.Button(win, text="3", command=lambda: enter.insert(tk.END, "3"), bd=4).grid(row=1, column=2, stick='wens', pady=5, padx=5)
-tk.Button(win, text="+", command=lambda: enter.insert(tk.END, "+"), bd=4).grid(row=1, column=3, stick='wens', pady=5, padx=5)
-tk.Button(win, text="4", command=lambda: enter.insert(tk.END, "4"), bd=4).grid(row=2, column=0, stick='wens', pady=5, padx=5)
-tk.Button(win, text="5", command=lambda: enter.insert(tk.END, "5"), bd=4).grid(row=2, column=1, stick='wens', pady=5, padx=5)
-tk.Button(win, text="6", command=lambda: enter.insert(tk.END, "6"), bd=4).grid(row=2, column=2, stick='wens', pady=5, padx=5)
-tk.Button(win, text="-", command=lambda: enter.insert(tk.END, "-"), bd=4).grid(row=2, column=3, stick='wens', pady=5, padx=5)
-tk.Button(win, text="7", command=lambda: enter.insert(tk.END, "7"), bd=4).grid(row=3, column=0, stick='wens', pady=5, padx=5)
-tk.Button(win, text="8", command=lambda: enter.insert(tk.END, "8"), bd=4).grid(row=3, column=1, stick='wens', pady=5, padx=5)
-tk.Button(win, text="9", command=lambda: enter.insert(tk.END, "9"), bd=4).grid(row=3, column=2, stick='wens', pady=5, padx=5)
-tk.Button(win, text="/", command=lambda: enter.insert(tk.END, "/"), bd=4).grid(row=3, column=3, stick='wens', pady=5, padx=5)
-tk.Button(win, text="C", command=lambda: enter.delete(0, tk.END), bd=4).grid(row=4, column=0, stick='wens', pady=5, padx=5)
-tk.Button(win, text="0", command=lambda: enter.insert(tk.END, "0"), bd=4).grid(row=4, column=1, stick='wens', pady=5, padx=5)
+make_number("1").grid(row=1, column=0, stick='wens', pady=5, padx=5)
+make_number("2").grid(row=1, column=1, stick='wens', pady=5, padx=5)
+make_number("3").grid(row=1, column=2, stick='wens', pady=5, padx=5)
+make_number("4").grid(row=2, column=0, stick='wens', pady=5, padx=5)
+make_number("5").grid(row=2, column=1, stick='wens', pady=5, padx=5)
+make_number("6").grid(row=2, column=2, stick='wens', pady=5, padx=5)
+make_number("7").grid(row=3, column=0, stick='wens', pady=5, padx=5)
+make_number("8").grid(row=3, column=1, stick='wens', pady=5, padx=5)
+make_number("9").grid(row=3, column=2, stick='wens', pady=5, padx=5)
+make_number("0").grid(row=4, column=1, stick='wens', pady=5, padx=5)
+
+tk.Button(win, text="C", command=remover, bd=4).grid(row=4, column=0, stick='wens', pady=5, padx=5)
+
+make_operator("+").grid(row=1, column=3, stick='wens', pady=5, padx=5)
+make_operator("-").grid(row=2, column=3, stick='wens', pady=5, padx=5)
+make_operator("/").grid(row=3, column=3, stick='wens', pady=5, padx=5)
+make_operator("*").grid(row=4, column=3, stick='wens', pady=5, padx=5)
 tk.Button(win, text="=", command=calculating, bd=4).grid(row=4, column=2, stick='wens', pady=5, padx=5)
-tk.Button(win, text="*", command=lambda: enter.insert(tk.END, "*"), bd=4).grid(row=4, column=3, stick='wens', pady=5, padx=5)
 
 
 win.grid_columnconfigure(0, minsize=60)
