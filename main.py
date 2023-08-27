@@ -14,14 +14,19 @@ win.iconphoto(False, logo)
 
 
 def calculating():
-    value = str(enter.get())
+    value = enter.get()
     enter.delete(0, tk.END)
     try:
-        enter.insert(tk.END, eval(value))
-    except ZeroDivisionError:
-        enter.insert(tk.END, "You cannot divide zeroes!")
+        if value[-1] in "-+/*":
+            enter.insert(0, eval(value[:-1] + value[-1] + value[:-1]))
+        else:
+            enter.insert(tk.END, eval(value))
+    except NameError:
+        enter.insert(tk.END, "Incorrect input, try again!")
     except SyntaxError:
         enter.insert(tk.END, "Syntax error, try again!")
+    except ZeroDivisionError:
+        enter.insert(tk.END, "You cannot divide zeroes!")
 
 
 def post_number(number):
@@ -35,8 +40,11 @@ def make_number(symbol):
 
 
 def post_operator(operator):
-    if enter.get()[-1] in '*-/+':
-        enter.delete(len(enter.get()) - 1)
+    value = enter.get()
+    if value[-1] in '*-/+':
+        enter.delete(len(value) - 1)
+    if '+' in value or '-' in value or '/' in value or '*' in value:
+        calculating()
     enter.insert(tk.END, operator)
 
 
